@@ -47,7 +47,7 @@
 #'            btn.style = "blue",
 #'            output.filename = "default_theme")
 #'
-#' @importFrom jsonlite toJSON
+#' @importFrom jsonlite fromJSON toJSON
 #'
 #' @export
 g3Lollipop <- function(mutation.dat,
@@ -65,7 +65,8 @@ g3Lollipop <- function(mutation.dat,
                        save.png.btn = TRUE,
                        save.svg.btn = TRUE,
                        btn.style = NA,
-                       output.filename = "output"
+                       output.filename = "output",
+                       pfam.file = NA
                        ){
   stopifnot(is.data.frame(mutation.dat))
 
@@ -103,8 +104,13 @@ g3Lollipop <- function(mutation.dat,
   # (2) custom domain information format
   #     Require
   # get protein domain information
-  domain.data.json <- hgnc2pfam(hgnc.symbol = gene.symbol,
-                                uniprot.id = uniprot.id)
+  
+  if(is.na(pfam.file)){
+    domain.data.json <- hgnc2pfam(hgnc.symbol = gene.symbol,
+                                  uniprot.id = uniprot.id)
+  } else {
+    domain.data.json <- fromJSON(pfam.file)
+  }
 
   # domain data format
   domain.data.format <- list(

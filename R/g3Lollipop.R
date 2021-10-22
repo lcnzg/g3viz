@@ -109,7 +109,7 @@ g3Lollipop <- function(mutation.dat,
     domain.data.json <- hgnc2pfam(hgnc.symbol = gene.symbol,
                                   uniprot.id = uniprot.id)
   } else {
-    domain.data.json <- fromJSON(pfam.file)
+    domain.data.json <- toJSON(fromJSON(pfam.file), pretty = FALSE, auto_unbox = TRUE)
   }
 
   # domain data format
